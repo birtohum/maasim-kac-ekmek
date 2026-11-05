@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maaşım kaç ekmek?</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 30 18%22%3E%3Cpath d=%22M2 12c0-6 5-10 13-10s13 4 13 10c0 3-2 4-4 4H6c-2 0-4-1-4-4z%22 fill=%22%23b8742a%22/%3E%3C/svg%3E">
+<meta name="description" content="Maaşını ve fırınındaki ekmek fiyatını yaz: kaç ekmek ettiğini, asgari ücretin zamdan bu yana ne kadar eridiğini ve marketteki karşılığını gör. Resmî TÜFE ve asgari ücret verisiyle.">
+<meta property="og:title" content="Maaşım kaç ekmek?">
+<meta property="og:description" content="Asgari ücret Ocak'tan bu yana bugünün fiyatlarıyla ne kadar eridi? Resmî verilerle, ekmek ekmek.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--zemin:#f7f1e3;--kagit:#fffaf0;--yazi:#2a1e12;--soluk:#7a6a55;--cizgi:#e4d6bb;--kabuk:#b8742a;--koyu:#7a4310;--kirmizi:#b3261e}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--zemin:#1c1712;--kagit:#241d16;--yazi:#f3e9d6;--soluk:#b3a389;--cizgi:#3d3226;--kabuk:#e0a35a;--koyu:#f0c48a;--kirmizi:#ff7a6e}}
+:root[data-theme="dark"]{--zemin:#1c1712;--kagit:#241d16;--yazi:#f3e9d6;--soluk:#b3a389;--cizgi:#3d3226;--kabuk:#e0a35a;--koyu:#f0c48a;--kirmizi:#ff7a6e}
+*{box-sizing:border-box}
+body{margin:0;background:var(--zemin);color:var(--yazi);font:16px/1.55 Inter,system-ui,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px}
+header{padding:48px 0 8px}
+.kicker{font:600 .72rem/1 Inter;letter-spacing:.14em;text-transform:uppercase;color:var(--kabuk);margin:0 0 14px}
+h1{font-family:Fraunces,Georgia,serif;font-weight:800;font-size:clamp(2.4rem,7vw,4.2rem);line-height:1;letter-spacing:-.02em;margin:0}
+h2{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:clamp(1.5rem,3.6vw,2rem);line-height:1.15;margin:0 0 8px}
+.lede{font-size:1.1rem;color:var(--soluk);max-width:56ch;margin:14px 0 0}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:30px 0 0}
+.alan{background:var(--kagit);border:1.5px solid var(--cizgi);border-radius:14px;padding:14px 16px}
+.alan label{display:block;font-size:.82rem;font-weight:600;color:var(--soluk);margin-bottom:4px}
+.alan .girdi{display:flex;align-items:baseline;gap:6px}
+.alan input{all:unset;width:100%;font:600 1.9rem/1.2 Fraunces,Georgia,serif;color:var(--yazi)}
+.alan input::placeholder{color:var(--cizgi)}
+.alan .birim{font:600 1.2rem Fraunces,serif;color:var(--soluk)}
+.alan small{display:block;color:var(--soluk);font-size:.8rem;margin-top:4px}
+.alan button{font:inherit;font-size:.8rem;background:none;border:0;color:var(--kabuk);text-decoration:underline;padding:0;cursor:pointer}
+.alan:focus-within{border-color:var(--kabuk)}
+.sonuc{margin:28px 0 0;padding:26px 22px;background:var(--kagit);border:1.5px solid var(--cizgi);border-radius:18px}
+.sonuc .buyuk{font:800 clamp(3.2rem,12vw,6.2rem)/1 Fraunces,Georgia,serif;letter-spacing:-.03em;color:var(--koyu)}
+.sonuc .buyuk small{font-size:.32em;font-weight:600;color:var(--yazi);letter-spacing:0}
+.sonuc p{margin:8px 0 0;color:var(--soluk)}
+.somunlar{display:flex;flex-wrap:wrap;gap:6px 4px;margin:18px 0 0}
+.somunlar svg{width:30px;height:18px}
+.somunlar .not{flex-basis:100%;font-size:.78rem;color:var(--soluk);margin-top:2px}
+.bos{color:var(--soluk);font-size:1.05rem}
+section{padding:46px 0 0}
+.not-k{font-size:.86rem;color:var(--soluk);max-width:64ch}
+.erime{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin:18px 0 0}
+.erime div{background:var(--kagit);border:1.5px solid var(--cizgi);border-radius:14px;padding:14px 16px}
+.erime b{display:block;font:800 1.9rem/1.1 Fraunces,serif}
+.erime span{font-size:.85rem;color:var(--soluk)}
+.erime .ok{font:600 1.6rem Fraunces;color:var(--kirmizi);background:none!important;border:0!important;padding:0!important}
+.erime div.simdi b{color:var(--kirmizi)}
+.grafik{margin:18px 0 0;background:var(--kagit);border:1.5px solid var(--cizgi);border-radius:14px;padding:10px 8px 4px}
+.grafik svg{display:block;width:100%;height:auto}
+.grafik text{fill:var(--soluk);font:11px Inter,sans-serif}
+.grafik .cizgi{fill:none;stroke:var(--koyu);stroke-width:2}
+.grafik .alanp{fill:var(--kabuk);opacity:.13}
+.grafik .izgara{stroke:var(--cizgi);stroke-width:1}
+.grafik .zam{fill:var(--koyu)}
+.grafik .etiket{fill:var(--yazi);font-weight:600}
+.secim{display:inline-flex;border:1.5px solid var(--cizgi);border-radius:99px;overflow:hidden;margin-top:12px}
+.secim button{font:600 .82rem Inter;border:0;background:none;color:var(--soluk);padding:7px 14px;cursor:pointer}
+.secim button[aria-pressed="true"]{background:var(--koyu);color:var(--kagit)}
+.raf{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:18px 0 0}
+.raf div{background:var(--kagit);border:1.5px solid var(--cizgi);border-radius:14px;padding:14px 16px}
+.raf b{display:block;font:800 1.7rem/1.1 Fraunces,serif;color:var(--koyu)}
+.raf span{font-size:.88rem}
+.raf small{display:block;color:var(--soluk);font-size:.76rem;margin-top:4px}
+footer{padding:48px 0 40px;color:var(--soluk);font-size:.84rem}
+footer a,.not-k a{color:var(--kabuk)}
+@media (max-width:620px){.form{grid-template-columns:1fr}.erime{grid-template-columns:1fr}.erime .ok{display:none}}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <p class="kicker">Resmî verilerle, ekmek ekmek</p>
+  <h1>Maaşım kaç ekmek?</h1>
+  <p class="lede">Maaşını ve fırınındaki ekmeğin fiyatını yaz. Asgari ücret hazır yazılı; ekmek fiyatı şehirden şehre, fırından fırına değiştiği için onu sen gir.</p>
+  <div class="form">
+    <div class="alan">
+      <label for="maas">Aylık net maaş</label>
+      <div class="girdi"><input id="maas" inputmode="decimal" autocomplete="off"><span class="birim">₺</span></div>
+      <small id="maas-not">2026 net asgari ücret (bekâr işçi)</small>
+    </div>
+    <div class="alan">
+      <label for="ekmek">Bir ekmek kaç lira?</label>
+      <div class="girdi"><input id="ekmek" inputmode="decimal" placeholder="fırınındaki fiyat" autocomplete="off"><span class="birim">₺</span></div>
+      <small>Gramajı da fırına göre değişir; senin aldığın ekmeğin fiyatı.</small>
+    </div>
+  </div>
+  <div class="sonuc" id="sonuc" aria-live="polite"><p class="bos">Ekmek fiyatını yazınca sonucu göreceksin.</p></div>
+</header>
+
+<main class="wrap">
+  <section id="erime-b">
+    <h2>Zamdan bu yana ne kadar eridi?</h2>
+    <p class="not-k" id="erime-not">Asgari ücret yılda bir artıyor, fiyatlar her ay. Aşağıda aynı maaşın, zammın geldiği ayda bugünün fiyatlarıyla ne kadar ettiği var.</p>
+    <div class="erime" id="erime"></div>
+  </section>
+
+  <section>
+    <h2>On yılda asgari ücret, bugünün parasıyla</h2>
+    <p class="not-k">Her ayın net asgari ücreti, TÜİK'in aylık TÜFE değişimleriyle <span id="son-ay"></span> fiyatlarına taşındı. Testere dişleri zam aylarında yükseliyor, sonra enflasyonla iniyor. Noktalar zam ayları.</p>
+    <div class="secim" role="group" aria-label="Grafik birimi"><button id="b-tl" aria-pressed="true">Lira</button><button id="b-ek" aria-pressed="false">Ekmek</button></div>
+    <div class="grafik" id="grafik"></div>
+  </section>
+
+  <section>
+    <h2>Bu maaş market rafında</h2>
+    <p class="not-k" id="raf-not">Fiyatlar <a href="https://birtohum.github.io/sepet-enflasyonu/">Sepet Enflasyonu</a> sitemin her gün ŞOK Market'in internet sitesinden okuduğu raf fiyatları. Taze ekmek internette satılmadığı için listede yok.</p>
+    <div class="raf" id="raf"></div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p><b>Kaynaklar.</b> Net asgari ücret (bekâr işçi): Çalışma ve Sosyal Güvenlik Bakanlığı tabloları, <a href="https://tr.wikipedia.org/wiki/T%C3%BCrkiye%27de_asgari_%C3%BCcret">Vikipedi'deki kaynaklı derlemesi</a> üzerinden; 2016–2021 değerleri asgari geçim indirimi dahil, 2022'den beri asgari ücret vergiden muaf. Aylık TÜFE: TÜİK, <a href="https://www.tcmb.gov.tr/wps/wcm/connect/TR/TCMB+TR/Main+Menu/Istatistikler/Enflasyon+Verileri/Tuketici+Fiyatlari">TCMB tablosu</a>. Seri her ay TÜFE açıklanınca kendiliğinden güncellenir.</p>
+  <p><b>Sınırlar.</b> TÜFE ortalama bir sepetin fiyatıdır; ekmek ya da kira senin yaşadığın yerde daha hızlı artmış olabilir. “Ekmek” birimindeki grafik, bugünkü ekmek fiyatını sabit alıp liradaki değeri ona böler; geçmişteki gerçek ekmek fiyatı değildir. Yazdığın hiçbir şey bir yere gönderilmez.</p>
+  <p>Kod: <a href="https://github.com/birtohum/maasim-kac-ekmek">github.com/birtohum/maasim-kac-ekmek</a> · <a href="https://birtohum.github.io/">birtohum</a></p>
+</footer>
+
+<script>
+"use strict";
+const $ = (s) => document.querySelector(s);
+const TL = (x, d = 0) => x.toLocaleString("tr-TR", {minimumFractionDigits: d, maximumFractionDigits: d});
+const AYLAR = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+const ayAd = (a) => `${AYLAR[+a.slice(5) - 1]} ${a.slice(0, 4)}`;
+const sayi = (s) => { const t = String(s).trim().replace(/\s|₺/g, ""); if (!t) return NaN;
+  const n = /,/.test(t) ? t.replace(/\./g, "").replace(",", ".") : (/^\d{1,3}(\.\d{3})+$/.test(t) ? t.replace(/\./g, "") : t); return parseFloat(n); };
+const kaydet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
+const oku = (k) => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+
+let V, RAF = null, birim = "tl";
+const somun = '<svg viewBox="0 0 30 18" aria-hidden="true"><path d="M2 12c0-6 5-10 13-10s13 4 13 10c0 3-2 4-4 4H6c-2 0-4-1-4-4z" fill="var(--kabuk)"/><path d="M9 6l2 5M15 5l1 6M21 6l-1 5" stroke="var(--kagit)" stroke-width="1.4" stroke-linecap="round"/></svg>';
+const yarim = '<svg viewBox="0 0 30 18" aria-hidden="true"><path d="M2 12c0-6 5-10 13-10s13 4 13 10c0 3-2 4-4 4H6c-2 0-4-1-4-4z" fill="none" stroke="var(--kabuk)" stroke-width="1.4" stroke-dasharray="3 2"/></svg>';
+
+function hesapla() {
+  const m = sayi($("#maas").value), e = sayi($("#ekmek").value);
+  const asg = V.asgari[V.asgari.length - 1].net;
+  $("#maas-not").innerHTML = Math.abs(m - asg) < 0.01 ? "2026 net asgari ücret (bekâr işçi)" : `<button id="asg-don">Asgari ücrete dön (${TL(asg, 2)} ₺)</button>`;
+  const d = $("#asg-don"); if (d) d.onclick = () => { $("#maas").value = TL(asg, 2); hesapla(); };
+  if (e > 0) kaydet("ekmek", $("#ekmek").value);
+  if (!(m > 0) || !(e > 0)) { $("#sonuc").innerHTML = `<p class="bos">${!(m > 0) ? "Maaşını yaz." : "Ekmek fiyatını yazınca sonucu göreceksin."}</p>`; erime(); ciz(); raf(); return; }
+  const n = Math.floor(m / e), gun = n / 30;
+  const her = n > 3000 ? 100 : n > 600 ? 50 : 10, tam = Math.floor(n / her);
+  const goster = Math.min(tam, 120);
+  $("#sonuc").innerHTML = `<div class="buyuk">${TL(n)} <small>ekmek</small></div>
+    <p>Günde ${TL(gun, 1)} ekmek. Bir ekmek için ${TL(e / m * 225 * 60, 0)} dakika çalışıyorsun (asgari ücret hesabındaki gibi ayda 225 saat sayarak).</p>
+    <div class="somunlar" aria-hidden="true">${somun.repeat(goster)}${n % her && goster === tam ? yarim : ""}<span class="not">Her somun ${her} ekmek${tam > goster ? `; ilk ${goster} tanesi gösteriliyor` : ""}.</span></div>`;
+  erime(); ciz(); raf();
+}
+
+function erime() {
+  const s = V.seri, son = s[s.length - 1], e = sayi($("#ekmek").value);
+  const zam = [...s].reverse().find((x, i, a) => i === a.length - 1 || a[i + 1].net !== x.net);
+  const kayip = 1 - son.bugun / zam.bugun;
+  const fmt = (tl) => e > 0 ? `${TL(Math.floor(tl / e))} ekmek` : `${TL(tl)} ₺`;
+  $("#erime").innerHTML = `<div><span>${ayAd(zam.ay)}, zam ayı</span><b>${fmt(zam.bugun)}</b><span>bugünün fiyatlarıyla</span></div>
+    <div class="ok">→</div>
+    <div class="simdi"><span>${ayAd(son.ay)}</span><b>${fmt(son.bugun)}</b><span>%${TL(kayip * 100, 1)} eridi</span></div>`;
+  $("#erime-not").textContent = `Asgari ücret yılda bir artıyor, fiyatlar her ay. ${ayAd(zam.ay)} zammıyla gelen ${TL(son.net, 2)} ₺, geldiği ay bugünün fiyatlarıyla ${TL(zam.bugun)} ₺'lik alışveriş ediyordu. Enflasyon ilerledikçe aynı maaşın alım gücü ayda ayda azaldı (son veri: ${ayAd(son.ay)}).` + (e > 0 ? "" : " Ekmek fiyatını yazarsan ekmek olarak da görürsün.");
+}
+
+function ciz() {
+  const s = V.seri, e = sayi($("#ekmek").value), ek = birim === "ek" && e > 0;
+  const deg = (x) => ek ? x.bugun / e : x.bugun;
+  const kutu = $("#grafik"), W = Math.max(320, kutu.clientWidth - 16), H = W < 500 ? 260 : 320;
+  const sol = W < 500 ? 46 : 58, sag = 12, ust = 22, alt = 26;
+  const ymax = Math.max(...s.map(deg)) * 1.08, ymin = 0;
+  const x = (i) => sol + i / (s.length - 1) * (W - sol - sag), y = (v) => ust + (1 - (v - ymin) / (ymax - ymin)) * (H - ust - alt);
+  let g = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Net asgari ücretin bugünkü fiyatlarla değeri, ${ayAd(s[0].ay)}–${ayAd(s[s.length - 1].ay)}">`;
+  const adim = ek ? (ymax > 3000 ? 1000 : 500) : 10000;
+  for (let v = 0; v <= ymax; v += adim) g += `<line class="izgara" x1="${sol}" x2="${W - sag}" y1="${y(v)}" y2="${y(v)}"/><text x="${sol - 6}" y="${y(v) + 4}" text-anchor="end">${ek ? TL(v) : TL(v / 1000) + " bin"}</text>`;
+  s.forEach((p, i) => { if (p.ay.endsWith("-01") && (+p.ay.slice(0, 4)) % (W < 500 ? 2 : 1) === 0) g += `<text x="${x(i)}" y="${H - 8}" text-anchor="middle">${p.ay.slice(0, 4)}</text>`; });
+  const yol = s.map((p, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(deg(p)).toFixed(1)}`).join("");
+  g += `<path class="alanp" d="${yol}L${x(s.length - 1)},${y(0)}L${x(0)},${y(0)}Z"/><path class="cizgi" d="${yol}"/>`;
+  s.forEach((p, i) => { if (i && p.net !== s[i - 1].net || !i) g += `<circle class="zam" cx="${x(i)}" cy="${y(deg(p))}" r="3"><title>${ayAd(p.ay)}: net ${TL(p.net, 2)} ₺ → bugünün fiyatlarıyla ${TL(p.bugun)} ₺</title></circle>`; });
+  const mx = s.reduce((a, b) => (b.bugun > a.bugun ? b : a)), im = s.indexOf(mx), son = s[s.length - 1];
+  g += `<text class="etiket" x="${x(im)}" y="${y(deg(mx)) - 8}" text-anchor="middle">En yüksek: ${ayAd(mx.ay)}</text>`;
+  g += `<text class="etiket" x="${x(s.length - 1)}" y="${y(deg(son)) + 18}" text-anchor="end">Bugün</text></svg>`;
+  kutu.innerHTML = g;
+  $("#b-ek").disabled = !(e > 0); $("#b-ek").title = e > 0 ? "" : "Önce ekmek fiyatını yaz";
+}
+
+function raf() {
+  const m = sayi($("#maas").value);
+  if (!RAF) return;
+  if (!(m > 0)) { $("#raf").innerHTML = ""; return; }
+  $("#raf").innerHTML = RAF.map((u) => `<div><b>${TL(Math.floor(m / u.son_fiyat))}</b><span>${SECILEN[u.kod]}</span><small>${u.ad} · ${TL(u.son_fiyat, 2)} ₺</small></div>`).join("");
+}
+
+const SECILEN = {su02: "litre süt", su09: "koli yumurta (30'lu)", ek01: "çuval un (5 kg)", ek02: "kilo pirinç", ek06: "paket makarna", su06: "paket beyaz peynir (500 g)", su03: "kilo yoğurt", su12: "litre ayran"};
+Promise.all([fetch("veri/asgari.json").then((r) => r.json()),
+  fetch("https://birtohum.github.io/sepet-enflasyonu/veri/urunler.json").then((r) => r.json()).catch(() => null)])
+  .then(([v, u]) => {
+    V = v;
+    $("#son-ay").textContent = ayAd(V.seri[V.seri.length - 1].ay);
+    if (u) { RAF = Object.keys(SECILEN).map((k) => u.find((x) => x.kod === k)).filter((x) => x && x.son_fiyat > 0);
+      const t = u.map((x) => x.gecmis && x.gecmis.length ? x.gecmis[x.gecmis.length - 1][0] : "").sort().pop();
+      if (t) $("#raf-not").insertAdjacentHTML("beforeend", ` Son okuma: ${+t.slice(8)} ${AYLAR[+t.slice(5, 7) - 1]}.`); }
+    else $("#raf-not").textContent = "Market fiyatları şu an yüklenemedi.";
+    $("#maas").value = TL(V.asgari[V.asgari.length - 1].net, 2);
+    const k = oku("ekmek"); if (k) $("#ekmek").value = k;
+    for (const id of ["#maas", "#ekmek"]) $(id).addEventListener("input", hesapla);
+    $("#b-tl").onclick = () => { birim = "tl"; $("#b-tl").setAttribute("aria-pressed", "true"); $("#b-ek").setAttribute("aria-pressed", "false"); ciz(); };
+    $("#b-ek").onclick = () => { birim = "ek"; $("#b-ek").setAttribute("aria-pressed", "true"); $("#b-tl").setAttribute("aria-pressed", "false"); ciz(); };
+    let z; addEventListener("resize", () => { clearTimeout(z); z = setTimeout(ciz, 150); });
+    hesapla();
+  })
+  .catch((e) => { $("#sonuc").textContent = "Veri yüklenemedi: " + e; });
+</script>
+</body>
+</html>

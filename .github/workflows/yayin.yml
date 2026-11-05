@@ -1,0 +1,36 @@
+name: Aylık güncelleme ve yayın
+on:
+  schedule:
+    - cron: "30 8 3-6 * *"   # TÜİK TÜFE'yi ayın 3'ünde 10:00'da açıklar
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency: { group: pages, cancel-in-progress: false }
+jobs:
+  guncelle:
+    runs-on: ubuntu-latest
+    environment: { name: github-pages, url: "${{ steps.yayin.outputs.page_url }}" }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Testler
+        run: python -m unittest discover -s testler -v
+      - name: TÜFE'yi çek, seriyi hesapla
+        if: github.event_name != 'push'
+        run: python araclar/uret.py
+      - name: Değişiklik varsa kaydet
+        if: github.event_name != 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898699+github-actions[bot]@users.noreply.github.com"
+          git add site/veri && git diff --cached --quiet || (git commit -m "Veri: $(date -u +%F)" && git push)
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: site }
+      - id: yayin
+        uses: actions/deploy-pages@v4
