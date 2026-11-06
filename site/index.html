@@ -138,7 +138,7 @@ function hesapla() {
   $("#maas-not").innerHTML = Math.abs(m - asg) < 0.01 ? "2026 net asgari ücret (bekâr işçi)" : `<button id="asg-don">Asgari ücrete dön (${TL(asg, 2)} ₺)</button>`;
   const d = $("#asg-don"); if (d) d.onclick = () => { $("#maas").value = TL(asg, 2); hesapla(); };
   if (e > 0) kaydet("ekmek", $("#ekmek").value);
-  if (!(m > 0) || !(e > 0)) { $("#sonuc").innerHTML = `<p class="bos">${!(m > 0) ? "Maaşını yaz." : "Ekmek fiyatını yazınca sonucu göreceksin."}</p>`; erime(); ciz(); raf(); return; }
+  if (!(m > 0) || !(e > 0)) { $("#sonuc").innerHTML = `<p class="bos">${!(m > 0) ? ($("#maas").value.trim() ? "Maaş sıfırdan büyük bir sayı olmalı." : "Maaşını yaz.") : "Ekmek fiyatını yazınca sonucu göreceksin."}</p>`; erime(); ciz(); raf(); return; }
   const n = Math.floor(m / e), gun = n / 30;
   const her = n > 3000 ? 100 : n > 600 ? 50 : 10, tam = Math.floor(n / her);
   const goster = Math.min(tam, 120);
@@ -177,7 +177,7 @@ function ciz() {
   g += `<text class="etiket" x="${x(im)}" y="${y(deg(mx)) - 8}" text-anchor="middle">En yüksek: ${ayAd(mx.ay)}</text>`;
   g += `<text class="etiket" x="${x(s.length - 1)}" y="${y(deg(son)) + 18}" text-anchor="end">Bugün</text></svg>`;
   kutu.innerHTML = g;
-  $("#b-ek").disabled = !(e > 0); $("#b-ek").title = e > 0 ? "" : "Önce ekmek fiyatını yaz";
+  $("#b-ek").title = e > 0 ? "" : "Önce ekmek fiyatını yaz";
 }
 
 function raf() {
@@ -201,7 +201,7 @@ Promise.all([fetch("veri/asgari.json").then((r) => r.json()),
     const k = oku("ekmek"); if (k) $("#ekmek").value = k;
     for (const id of ["#maas", "#ekmek"]) $(id).addEventListener("input", hesapla);
     $("#b-tl").onclick = () => { birim = "tl"; $("#b-tl").setAttribute("aria-pressed", "true"); $("#b-ek").setAttribute("aria-pressed", "false"); ciz(); };
-    $("#b-ek").onclick = () => { birim = "ek"; $("#b-ek").setAttribute("aria-pressed", "true"); $("#b-tl").setAttribute("aria-pressed", "false"); ciz(); };
+    $("#b-ek").onclick = () => { if (!(sayi($("#ekmek").value) > 0)) { const k = $("#ekmek"); k.placeholder = "önce ekmek fiyatını yaz"; k.focus(); k.scrollIntoView({block: "center", behavior: "smooth"}); return; } birim = "ek"; $("#b-ek").setAttribute("aria-pressed", "true"); $("#b-tl").setAttribute("aria-pressed", "false"); ciz(); };
     let z; addEventListener("resize", () => { clearTimeout(z); z = setTimeout(ciz, 150); });
     hesapla();
   })
